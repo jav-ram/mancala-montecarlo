@@ -1,3 +1,6 @@
+from utils import show
+import random
+
 # game status
 status = {
     'board': [
@@ -64,3 +67,17 @@ def make_turn(player, move, status):
         return None
     # make move
     return make_move(player, move, status)
+
+if __name__ == "__main__":
+    while True:
+        show(status)
+        if status['turn']:
+            moves = get_possibles_moves(status['turn'], status)
+            status = make_turn(status['turn'], random.choice(moves), status)
+        else:
+            while True:
+                move = input('Por favor ingrese su movimiento: \n')
+                turn = make_turn(status['turn'], int(move), status)
+                if turn:
+                    status = turn
+                    break
