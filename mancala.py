@@ -1,5 +1,6 @@
 from utils import show
 import random
+import math
 
 # game status
 status = {
@@ -12,8 +13,17 @@ status = {
         0,  # Mancala P2 [13]
     ],
     'turn': 0,
-    'finnish': False,
+    'finish': False,
 }
+
+
+def get_score(status):
+    for player in range(2):
+        mancala = 6 + (7 * player)
+        score = status['board'][mancala]
+        score += sum(status['board'][mancala - 6: mancala])
+        status['board'][mancala] = score
+    return status
 
 
 def get_possibles_moves(player, status):
@@ -44,12 +54,21 @@ def make_move(player, move, status):
         # check if can steal
         if board[move] == 1:  # it was empty
             dif = 6 - move
-            mirror_move = 6 + move
+            mirror_move = 6 + dif
+            print(dif)
+            print(move)
+            print(mirror_move)
+            print(board[mirror_move])
+            print(status)
             if board[mirror_move] > 0:  # mirror tile have something
+                print("########################")
+                print("steal")
                 temp = board[mirror_move]
                 board[mirror_move] = 0
                 temp = temp + board[move]
                 board[move] = 0
+                print(temp)
+                print("########################")
 
                 board[6 + (7 * player)] += temp
 
@@ -58,21 +77,26 @@ def make_move(player, move, status):
 
 
 def make_turn(player, move, status):
-    # validate turn
-    if player != status['turn']:
-        return None
     # validate move
     board = status['board']
     possible_moves = get_possibles_moves(player, status)
-    if move not in possible_moves:
-        return None
+    print(possible_moves)
+
+    if not possible_moves:
+        # I lost, get winning score
+        status['finish'] = True
+        get_score(status)
+        print('ya perdi')
+        return status
+
     # make move
     status = make_move(player, move, status)
+    print(get_possibles_moves(player, status))
     # end ?
     if not get_possibles_moves(player, status):
         # i lost
         status['finnish'] = True
-    return make_move(player, move, status)
+    return status
 
 if __name__ == "__main__":
     while True:
