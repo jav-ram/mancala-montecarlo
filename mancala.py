@@ -12,6 +12,7 @@ status = {
         0,  # Mancala P2 [13]
     ],
     'turn': 0,
+    'finnish': False,
 }
 
 
@@ -63,12 +64,14 @@ def make_turn(player, move, status):
     # validate move
     board = status['board']
     possible_moves = get_possibles_moves(player, status)
-    if not possible_moves:
-        # I lost
-        pass
     if move not in possible_moves:
         return None
     # make move
+    status = make_move(player, move, status)
+    # end ?
+    if not get_possibles_moves(player, status):
+        # i lost
+        status['finnish'] = True
     return make_move(player, move, status)
 
 if __name__ == "__main__":
