@@ -15,6 +15,15 @@ status = {
 }
 
 
+def get_score(status):
+    for player in range(2):
+        mancala = 6 + (7 * player)
+        score = status['board'][mancala]
+        score += sum(status['board'][mancala - 6: mancala])
+        status['board'][mancala] = score
+    return status
+
+
 def get_possibles_moves(player, status):
     possibles_moves = []
     board = status['board']
@@ -64,7 +73,8 @@ def make_turn(player, move, status):
     board = status['board']
     possible_moves = get_possibles_moves(player, status)
     if not possible_moves:
-        # I lost
+        # I lost, get winning score
+
         pass
     if move not in possible_moves:
         return None
