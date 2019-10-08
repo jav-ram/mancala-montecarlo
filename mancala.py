@@ -55,20 +55,11 @@ def make_move(player, move, status):
         if board[move] == 1:  # it was empty
             dif = 6 - move
             mirror_move = 6 + dif
-            print(dif)
-            print(move)
-            print(mirror_move)
-            print(board[mirror_move])
-            print(status)
             if board[mirror_move] > 0:  # mirror tile have something
-                print("########################")
-                print("steal")
                 temp = board[mirror_move]
                 board[mirror_move] = 0
                 temp = temp + board[move]
                 board[move] = 0
-                print(temp)
-                print("########################")
 
                 board[6 + (7 * player)] += temp
 
@@ -80,22 +71,16 @@ def make_turn(player, move, status):
     # validate move
     board = status['board']
     possible_moves = get_possibles_moves(player, status)
-    print(possible_moves)
 
-    if not possible_moves:
+    # make move
+    status = make_move(player, move, status)
+    # end ?
+    if not get_possibles_moves(player, status):
         # I lost, get winning score
         status['finish'] = True
         get_score(status)
         print('ya perdi')
         return status
-
-    # make move
-    status = make_move(player, move, status)
-    print(get_possibles_moves(player, status))
-    # end ?
-    if not get_possibles_moves(player, status):
-        # i lost
-        status['finnish'] = True
     return status
 
 if __name__ == "__main__":

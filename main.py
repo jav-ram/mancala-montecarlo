@@ -11,8 +11,8 @@ if __name__ == "__main__":
             p = get_possibles_moves(0, status)
             while choose not in p:
                 show(status)
-                choose = int(input('please insert move'))
-                choose = -1 if choose == '' else choose
+                choose = input('please insert move')
+                choose = -1 if choose == '' else int(choose)
                 status = make_turn(0, choose, status)
                 print(status['turn'])
         elif turn == 1:
@@ -22,3 +22,6 @@ if __name__ == "__main__":
             possible = get_possibles_moves(1, status)
             choose = random.choice(possible)
             status = make_turn(1, choose, status)
+    board = status['board']
+    print("Player 1 score: " + str(board[6]))
+    print("Player 2 score: " + str(board[13])
