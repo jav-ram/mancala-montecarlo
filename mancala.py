@@ -77,11 +77,11 @@ def make_turn(player, move, status):
     # make move
     status = make_move(player, move, status)
     # end ?
-    if not get_possibles_moves(player, status):
-        # I lost, get winning score
+    if (not get_possibles_moves(player, status) or
+            not get_possibles_moves((player + 1) % 2, status)):
+        # I lost or the other one lost, get winning score
         status['finish'] = True
         get_score(status)
-        print('ya perdi')
         return status
     return status
 

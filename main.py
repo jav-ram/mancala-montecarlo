@@ -1,15 +1,21 @@
 import players
 from mancala import status
 
-if __name__ == "__main__":
+
+def game(player1, player2, status):
     while not status['finish']:
         turn = status['turn']
         if turn == 0:
             # first player
-            status = players.player(status, 0)
+            status = player1(status, 0)
         elif turn == 1:
             # robot
-            status = players.randomPlayer(status, 1)
+            status = player2(status, 1)
     board = status['board']
-    print("Player 1 score: " + str(board[6]))
-    print("Player 2 score: " + str(board[13]))
+    score = [board[6], board[13]]
+    print("Player 1 score: " + str(score[0]))
+    print("Player 2 score: " + str(score[1]))
+    return score.index(max(score))
+
+winner = game(players.player, players.randomPlayer, status)
+print("WINNER PLAYER " + str(winner + 1))
