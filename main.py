@@ -1,10 +1,12 @@
 import players
 from mancala import status
+from utils import show
 
 
 def game(player1, player2, status):
     while not status['finish']:
         turn = status['turn']
+        show(status)
         if turn == 0:
             # first player
             player1(status, 0)
@@ -15,6 +17,5 @@ def game(player1, player2, status):
     score = [board[6], board[13]]
     return score.index(max(score))
 
-""" winner = game(player, randomPlayer, status)
+winner = game(players.monteCarlo, players.randomPlayer, status)
 print("WINNER PLAYER " + str(winner + 1))
- """
