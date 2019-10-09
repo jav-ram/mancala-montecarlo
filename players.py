@@ -15,7 +15,10 @@ def player(status, player):
 
 
 def monteCarlo(status, player):
-    # DO MONTECARLO
+    # make a lot games from status
+    # analize move with more wins
+    # make move
+    # return new status
     pass
 
 
