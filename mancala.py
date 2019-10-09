@@ -55,8 +55,6 @@ def make_move(player, move, status):
         if board[move] == 1:  # it was empty
             dif = 6 - move
             mirror_move = 6 + dif
-            print(move)
-            print(mirror_move)
             if board[mirror_move] > 0:  # mirror tile have something
                 temp = board[mirror_move]
                 board[mirror_move] = 0
